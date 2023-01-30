@@ -70,5 +70,17 @@ lib ODE
 
   fun world_set_gravity = dWorldSetGravity(world : World, x : Real, y : Real, z : Real)
 
-  
+  fun world_get_erp = dWorldGetERP(world : World) : Real
+  fun world_set_erp = dWorldSetERP(world : World, erp : Real)
+  fun world_get_cfm = dWorldGetCFM(world : World) : Real
+  fun world_set_cfm = dWorldSetCFM(world : World, cfm : Real)
+
+  fun world_step = dWorldStep(world : World, stepsize : Real)
+  fun world_quick_step = dWorldQuickStep(world : World, stepsize : Real)
+
+  fun world_set_quick_step_num_iterations = dWorldSetQuickStepNumIterations(world : World, num : LibC::Int)
+  fun world_get_quick_step_num_iterations = dWorldGetQuickStepNumIterations(world : World) : LibC::Int
+
+  fun world_get_contact_max_correcting_velocity = dWorldGetContactMaxCorrectingVel(world : World) : Real
+  fun world_set_contact_max_correcting_velocity = dWorldSetContactMaxCorrectingVel(world : World, vel : Real)
 end
