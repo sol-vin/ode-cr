@@ -1,0 +1,13 @@
+name: ode-cr
+version: 0.1.0
+
+authors:
+  - Ian Rash <redcodefinal@gmail.com>
+
+targets:
+  sandbox:
+    main: src/sandbox.cr
+
+crystal: 1.6.0
+
+license: MIT
