@@ -1,22 +1,21 @@
 # ode-cr
 
-TODO: Write a description here
+Crystal bindings for the [ODE (Open Dynamics Engine)](https://github.com/sol-vin/ode-cr)
 
 ## Installation
 
-TODO: Write installation instructions here
+1. Install ODE
+2. Add this to dependencies
 
 ## Usage
 
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
+```crystal
+require "ode-cr"
+```
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/ode-cr/fork>)
+1. Fork it (<https://github.com/sol-vin/ode-cr/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -24,4 +23,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [Ian Rash](https://github.com/your-github-user) - creator and maintainer
+- [Ian Rash](https://github.com/sol-vin) - creator and maintainer
