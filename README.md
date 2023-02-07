@@ -1,6 +1,6 @@
 # ode-cr
 
-Crystal bindings for the [ODE (Open Dynamics Engine)](https://github.com/sol-vin/ode-cr)
+Crystal bindings for the [ODE (Open Dynamics Engine)](https://ode.org/)
 
 ## Installation
 
