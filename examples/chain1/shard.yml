@@ -1,0 +1,17 @@
+name: chain1
+version: 0.1.0
+
+authors:
+  - Ian Rash <ian@sol.vin>
+
+targets:
+  chain1:
+    main: src/chain1.cr
+
+dependencies:
+  ode-cr:
+    github: sol-vin/ode-cr
+
+crystal: 1.6.0
+
+license: MIT
