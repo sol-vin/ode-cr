@@ -16,7 +16,7 @@ lib ODE
   alias Matrix6 = StaticArray(Real, 48)
   alias Quaternion = StaticArray(Real, 4)
 
-  alias NearCallback = Proc(Void*, Geom, Geom)
+  alias NearCallback = Proc(Void*, Geom, Geom, Nil)
   alias HeightfieldGetHeight = Proc(Void*, LibC::Int, LibC::Int)
 
   struct Mass

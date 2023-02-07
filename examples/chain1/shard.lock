@@ -1,0 +1,10 @@
+version: 2.0
+shards:
+  ode-cr:
+    git: https://github.com/sol-vin/ode-cr.git
+    version: 0.1.0+git.commit.659bbc51064afa8c0218e2652dfe00a2fb85fae2
+
+  raylib-cr:
+    git: https://github.com/sol-vin/raylib-cr.git
+    version: 0.9+git.commit.cd15f2f47621a1f46c6c52664239935ca12a0092
+
