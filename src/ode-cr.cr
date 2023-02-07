@@ -169,7 +169,7 @@ lib ODE
 
   fun body_enable = dBodyEnable(body : Body)
   fun body_disable = dBodyDisable(body : Body)
-  fun body_is_enabled = dBodyEnable(body : Body) : LibC::Int
+  fun body_is_enabled = dBodyIsEnabled(body : Body) : LibC::Int
 
   fun body_set_gravity_mode = dBodySetGravityMode(body : Body, mode : LibC::Int)
   fun body_get_gravity_mode = dBodyGetGravityMode(body : Body) : LibC::Int
@@ -230,7 +230,7 @@ lib ODE
   fun joint_set_a_motor_axis = dJointSetAMotorAxis(joint : Joint, anum : LibC::Int, rel : LibC::Int, x : Real, y : Real, z : Real)
   fun joint_set_a_motor_angle = dJointSetAMotorAngle(joint : Joint, anum : LibC::Int, angle : Real)
   fun joint_set_a_motor_param = dJointSetAMotorParam(joint : Joint, parameter : LibC::Int, value : Real)
-  fun joint_set_a_motor_mode = dJointSetAMotorMode(joint : Joint, mode :: LibC::Int)
+  fun joint_set_a_motor_mode = dJointSetAMotorMode(joint : Joint, mode : LibC::Int)
   fun joint_add_a_motor_torques = dJointAddAMotorTorques(joint : Joint, torque1 : Real, torque2 : Real, torque3 : Real)
   fun joint_set_l_motor_num_axes = dJointSetLMotorNumAxes(joint : Joint, num : LibC::Int)
   fun joint_set_l_motor_axis = dJointSetLMotorAxis(joint : Joint, anum : LibC::Int, rel : LibC::Int, x : Real, y : Real, z : Real)
@@ -247,7 +247,7 @@ lib ODE
   fun joint_get_slider_position = dJointGetSliderPosition(joint : Joint) : Real
   fun joint_get_slider_position_rate = dJointGetSliderPositionRate(joint : Joint) : Real
   fun joint_get_slider_axis = dJointGetSliderAxis(joint : Joint, result : Vector3)
-  fun joint_get_slider_param = dJointGetSliderAxis(joint : Joint, parameter : LibC::Int) : Real
+  fun joint_get_slider_param = dJointGetSliderParam(joint : Joint, parameter : LibC::Int) : Real
   fun joint_get_hinge_anchor = dJointGetHinge2Anchor(joint : Joint, result : Vector3)
   fun joint_get_hinge_anchor2 = dJointGetHinge2Anchor2(joint : Joint, result : Vector3)
   fun joint_get_hinge2_axis1 = dJointGetHinge2Axis1(joint : Joint, result : Vector3)
@@ -265,7 +265,7 @@ lib ODE
   fun joint_get_universal_angle2 = dJointGetUniversalAngle2(joint : Joint) : Real
   fun joint_get_universal_angle1_rate = dJointGetUniversalAngle1Rate(joint : Joint) : Real
   fun joint_get_universal_angle2_rate = dJointGetUniversalAngle2Rate(joint : Joint) : Real
-  fun joint_get_a_motor_num_axes = dJointGetUniversalAngle1(joint : Joint) : LibC::Int
+  fun joint_get_a_motor_num_axes = dJointGetAMotorNumAxes(joint : Joint) : LibC::Int
   fun joint_get_a_motor_axis = dJointGetAMotorAxis(joint : Joint, anum : LibC::Int, result : Vector3)
   fun joint_get_a_motor_axis_rel = dJointGetAMotorAxisRel(joint : Joint, anum : LibC::Int) : LibC::Int
   fun joint_get_a_motor_angle = dJointGetAMotorAngle(joint : Joint, anum : LibC::Int) : Real
@@ -289,7 +289,7 @@ lib ODE
   fun joint_set_feedback = dJointSetFeedback(joint : Joint, feedback : JointFeedback*)
   fun joint_get_feedback = dJointGetFeedback(joint : Joint) : JointFeedback*
 
-  fun are_connected = dAreConnected(body : Body, body : Body) : LibC::Int
+  fun are_connected = dAreConnected(body1 : Body, body2 : Body) : LibC::Int
 
   # Mass
   fun mass_set_zero = dMassSetZero(mass : Mass*)
@@ -307,7 +307,7 @@ lib ODE
   fun mass_set_box_total = dMassSetBoxTotal(mass : Mass*, density : Real, lx : Real, ly : Real, lz : Real)
   fun mass_adjust = dMassAdjust(mass : Mass*, new_mass : Real)
   fun mass_translate = dMassTranslate(mass : Mass*, x : Real, y : Real, z : Real)
-  fun mass_rotate = dMassTranslate(mass : Mass*, r : Matrix3)
+  fun mass_rotate = dMassRotate(mass : Mass*, r : Matrix3)
   fun mass_add = dMassAdd(a : Mass*, b : Mass*)
 
   # Space
@@ -375,7 +375,7 @@ lib ODE
   fun geom_get_offset_position = dGeomGetOffsetPosition(geom : Geom) : Real*
   fun geom_get_offset_rotation = dGeomGetOffsetRotation(geom : Geom) : Real*
   fun geom_destroy = dGeomDestroy(geom : Geom)
-  fun geom_get_aabb = dGeomDestroy(geom : Geom, aabb : StaticArray(Real, 6))
+  fun geom_get_aabb = dGeomGetAABB(geom : Geom, aabb : StaticArray(Real, 6))
   fun geom_get_space_aabb = dGeomGetSpaceAABB(geom : Geom) : Real*
   fun geom_is_space = dGeomIsSpace(geom : Geom) : LibC::Int
   fun geom_get_space = dGeomGetSpace(geom : Geom) : Space
@@ -404,7 +404,7 @@ lib ODE
   fun geom_transform_get_info = dGeomTransformGetInfo(g : Geom) : LibC::Int
   
 
-  fun collide = dCollide(o1 : Geom, o2 : Geom, flags : LibC::Int, contact : *ContactGeom, skip : LibC::Int) : LibC::Int
+  fun collide = dCollide(o1 : Geom, o2 : Geom, flags : LibC::Int, contact : ContactGeom*, skip : LibC::Int) : LibC::Int
   
   # Trimesh
   fun geom_tri_mesh_data_create = dGeomTriMeshDataCreate : TriMeshData
@@ -414,8 +414,8 @@ lib ODE
     vertex_count : LibC::Int, indices : Void*, index_count : LibC::Int,
     tri_stride : LibC::Int, normals : Void*
     )
-  fun geom_tri_mesh_data_build_simple(g : TriMeshData, vertices : Real*, vertex_count : LibC::Int, indices : LibC::Int*, index_count : LibC::Int)
-  fun create_tri_mesh : dCreateTriMesh(space : Space, data : TriMeshData. callback : Void*. array_callback : Void*, ray_callback : Void*) : Geom
+  fun geom_tri_mesh_data_build_simple = dGeomTriMeshDataBuildSimple(g : TriMeshData, vertices : Real*, vertex_count : LibC::Int, indices : LibC::Int*, index_count : LibC::Int)
+  fun create_tri_mesh = dCreateTriMesh(space : Space, data : TriMeshData, callback : Void*, array_callback : Void*, ray_callback : Void*) : Geom
   fun geom_tri_mesh_set_data = dGeomTriMeshSetData(g : Geom, data : TriMeshData)
   fun geom_tri_mesh_clear_tc_cache = dGeomTriMeshClearTCCache(geom : Geom)
   fun geom_tri_mesh_get_triangle = dGeomTriMeshGetTriangle(g : Geom, index : LibC::Int, v0 : Vector3*, v1 : Vector3*, v2 : Vector3*)
