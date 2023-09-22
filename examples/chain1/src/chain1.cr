@@ -1,5 +1,6 @@
 require "ode-cr"
 require "raylib-cr"
+
 module Chain1
   alias R = Raylib
   alias RV3 = Raylib::Vector3
@@ -10,10 +11,9 @@ module Chain1
     HEIGHT =  800
   end
 
-
-  NUM = 10
-  SIDE = 0.2
-  MASS = 1.0
+  NUM    =     10
+  SIDE   =    0.2
+  MASS   =    1.0
   RADIUS = 0.1732
 
   class_getter world : O::World = O::World.new
@@ -51,17 +51,9 @@ module Chain1
 
   def self.step
     @@angle += 0.05
-    O.body_add_force(bodies.last, 0, 0, 1.5*Math.sin(angle)+1.0)
-    
-    #
-    # ERRORS
-    #
-    #O.space_collide(space, Pointer(Void*).null, pointerof(CALLBACK));
-    #O.world_step(world,0.05);
-    #
-    # ERRORS
-    #
-    
+    O.body_add_force(bodies.last, 0, 0, 1.5*Math.sin(angle) + 1.0)
+    # O.space_collide(space, Pointer(Void*).null, pointerof(CALLBACK))
+    O.world_step(world, 0.05)
     O.joint_group_empty(contact_group)
   end
 
@@ -95,6 +87,8 @@ module Chain1
     # Setup Raylib
     R.init_window(Screen::WIDTH, Screen::HEIGHT, "wireland")
     R.set_target_fps(60)
+    O.allocate_data(O::AllocateFlags::MaskAll)
+    O.init
 
     # Setup physics
     @@link_mass = O::Mass.new
@@ -108,25 +102,28 @@ module Chain1
       bodies << O.body_create(world)
       k = i*SIDE
 
-      O.body_set_position(bodies[i],k,k,k+0.4);
-      O.mass_set_box(pointerof(@@link_mass), 1, SIDE,SIDE,SIDE)
+      O.body_set_position(bodies[i], k, k, k + 0.4)
+      O.mass_set_box(pointerof(@@link_mass), 1, SIDE, SIDE, SIDE)
       O.mass_adjust(pointerof(@@link_mass), MASS)
       O.body_set_mass(bodies[i], pointerof(@@link_mass))
-      chain_links << O.create_sphere(space,RADIUS)
+      chain_links << O.create_sphere(space, RADIUS)
       O.geom_set_body(chain_links[i], bodies[i])
     end
 
-    (NUM-1).times do |i|
-      joints << O.joint_create_ball(world, O::JointGroup.new);
-      O.joint_attach(joints[i],bodies[i],bodies[i+1]);
-      k = (i+0.5)*SIDE;
-      O.joint_set_ball_anchor(joints[i],k,k,k+0.4);
+    (NUM - 1).times do |i|
+      joints << O.joint_create_ball(world, O::JointGroup.new)
+      O.joint_attach(joints[i], bodies[i], bodies[i + 1])
+      k = (i + 0.5)*SIDE
+      O.joint_set_ball_anchor(joints[i], k, k, k + 0.4)
     end
 
     until R.close_window?
       update
       draw
     end
+
+    R.close_window
+    O.close
   end
 end
 

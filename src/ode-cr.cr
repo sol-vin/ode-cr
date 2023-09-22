@@ -19,6 +19,12 @@ lib ODE
   alias NearCallback = Proc(Void*, Geom, Geom, Nil)
   alias HeightfieldGetHeight = Proc(Void*, LibC::Int, LibC::Int)
 
+  enum AllocateFlags
+    BasicData = 0
+    CollisionData = 0x00000001
+    MaskAll = ~0
+  end
+
   struct Mass
     mass : Real
     c : Vector4
@@ -63,6 +69,8 @@ lib ODE
 
   fun init = dInitODE
   #fun init2 = dInitODE2(flags : LibC::UInt)
+  fun allocate_data = dAllocateODEDataForThread(allocate_flags : LibC::UInt) : LibC::Int
+  fun cleanup_all_data = dCleanupODEAllDataForThread
   fun close = dCloseODE
 
   # World
