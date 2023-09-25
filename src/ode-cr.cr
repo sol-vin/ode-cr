@@ -326,8 +326,8 @@ lib ODE
   fun space_add = dSpaceAdd(space : Space, geom : Geom)
   fun space_remove = dSpaceRemove(space : Space, geom : Geom)
   fun space_query = dSpaceQuery(space : Space, geom : Geom) : LibC::Int
-  fun space_collide = dSpaceCollide(space : Space, data : Void*, callback : NearCallback*)
-  fun space_collide2 = dSpaceCollide2(o1 : Geom, o2 : Geom, data : Void*, callback : NearCallback*)
+  fun space_collide = dSpaceCollide(space : Space, data : Void*, callback : NearCallback)
+  fun space_collide2 = dSpaceCollide2(o1 : Geom, o2 : Geom, data : Void*, callback : NearCallback)
   fun hash_space_set_levels = dHashSpaceSetLevels(space : Space, min_level : LibC::Int, max_level : LibC::Int)
   fun hash_space_set_levels = dHashSpaceGetLevels(space : Space, min_level : LibC::Int*, max_level : LibC::Int*)
   fun space_set_cleanup = dSpaceSetCleanup(space : Space, mode : LibC::Int)

@@ -52,7 +52,7 @@ module Chain1
   def self.step
     @@angle += 0.05
     O.body_add_force(bodies.last, 0, 0, 1.5*Math.sin(angle) + 1.0)
-    # O.space_collide(space, Pointer(Void*).null, pointerof(CALLBACK))
+    O.space_collide(space, Pointer(Void*).null, CALLBACK)
     O.world_step(world, 0.05)
     O.joint_group_empty(contact_group)
   end
@@ -87,7 +87,6 @@ module Chain1
     # Setup Raylib
     R.init_window(Screen::WIDTH, Screen::HEIGHT, "wireland")
     R.set_target_fps(60)
-    O.allocate_data(O::AllocateFlags::MaskAll)
     O.init
 
     # Setup physics
