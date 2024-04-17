@@ -24,3 +24,4 @@ require "ode-cr"
 ## Contributors
 
 - [Ian Rash](https://github.com/sol-vin) - creator and maintainer
+- [Devin Shwagginz](https://github.com/D-Shwagginz) - the one who fixed everything
