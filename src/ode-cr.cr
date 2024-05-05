@@ -1,5 +1,4 @@
-
-@[Link("ode")]
+@[Link("ode_doubled")]
 lib ODE
   DUMMY = [:World, :Space, :Body, :Geom, :Joint, :JointGroup, :TriMeshData, :HeightfieldData]
 

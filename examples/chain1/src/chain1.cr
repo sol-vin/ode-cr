@@ -33,26 +33,33 @@ module Chain1
     projection: R::CameraProjection::Perspective)
 
   CALLBACK = ->(data : Void*, o1 : O::Geom, o2 : O::Geom) do
+    puts "CALLBACK 1"
     contact = O::Contact.new
     geom = contact.geom
 
     b1 = O.geom_get_body(o1)
     b2 = O.geom_get_body(o2)
 
+    puts "CALLBACK 2"
     return if O.are_connected(b1, b2) > 0
-
+    puts "CALLBACK 3"
     contact.surface.mu = 0.1
-
-    if O.collide(o1, o2, 1, pointerof(geom), sizeof(O::ContactGeom)) > 0
+    puts "CALLBACK 4"
+    colliding = O.collide(o1, o2, 1, pointerof(geom), 1000) > 0
+    puts "CALLBACK 5"
+    if colliding
       c = O.joint_create_contact(world, contact_group, pointerof(contact))
       O.joint_attach(c, b1, b2)
     end
+    puts "CALLBACK 6"
   end
 
   def self.step
     @@angle += 0.05
     O.body_add_force(bodies.last, 0, 0, 1.5*Math.sin(angle) + 1.0)
+    puts "STEP1"
     O.space_collide(space, Pointer(Void*).null, CALLBACK)
+    puts "STEP2"
     O.world_step(world, 0.05)
     O.joint_group_empty(contact_group)
   end
@@ -123,7 +130,9 @@ module Chain1
 
 
     until R.close_window?
+      puts "preupdate"
       update
+      puts "postupdate"
       draw
     end
     puts "6"
