@@ -1,6 +1,5 @@
 require "./ode-cr"
 
-
+puts "1"
 ODE.init
-
-ODE.close
+puts "2"

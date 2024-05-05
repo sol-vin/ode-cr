@@ -10,7 +10,7 @@ targets:
 
 dependencies:
   ode-cr:
-    github: sol-vin/ode-cr
+    path: ../../
   raylib-cr:
     github: sol-vin/raylib-cr
 crystal: 1.6.0

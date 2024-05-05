@@ -84,10 +84,12 @@ module Chain1
   end
 
   def self.run
+    puts "1"
     # Setup Raylib
     R.init_window(Screen::WIDTH, Screen::HEIGHT, "wireland")
     R.set_target_fps(60)
     O.init
+    puts "2"
 
     # Setup physics
     @@link_mass = O::Mass.new
@@ -97,6 +99,7 @@ module Chain1
     O.world_set_gravity(world, 0, 0, -0.5)
     O.create_plane(space, 0, 0, 1, 0)
 
+    puts "3"
     NUM.times do |i|
       bodies << O.body_create(world)
       k = i*SIDE
@@ -108,6 +111,7 @@ module Chain1
       chain_links << O.create_sphere(space, RADIUS)
       O.geom_set_body(chain_links[i], bodies[i])
     end
+    puts "4"
 
     (NUM - 1).times do |i|
       joints << O.joint_create_ball(world, O::JointGroup.new)
@@ -115,11 +119,15 @@ module Chain1
       k = (i + 0.5)*SIDE
       O.joint_set_ball_anchor(joints[i], k, k, k + 0.4)
     end
+    puts "5"
+
 
     until R.close_window?
       update
       draw
     end
+    puts "6"
+
 
     R.close_window
     O.close
